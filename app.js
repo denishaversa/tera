@@ -705,6 +705,7 @@ function renderRail(){
     <div class="railfoot"><div id="savebadge" class="row">${saveBadge()}</div>
       <button class="btn small" data-act="demo">Fill with example data</button>
       <button class="btn small" data-act="reset">${T.resetArm?"Click again to erase":"Start over"}</button></div>`;
+  centerStep();
 }
 const head=(eb,title,lede)=>`<header class="head"><div class="eyebrow">${(m=>m?`Step ${+m[1]} of ${SCREENS.length}`:eb)(/·\s*(\d+)\s*$/.exec(eb))}</div><h1>${title}</h1>${lede?`<p class="lede">${lede}</p>`:""}</header>`;
 const nav=(prev,next,label,disabled,hint)=>`<div class="footer-nav">${prev?`<button class="btn" data-act="go" data-id="${prev}">Back</button>`:"<span></span>"}<div class="row">${hint?`<span class="note">${hint}</span>`:""}${next?`<button class="btn primary" data-act="go" data-id="${next}" ${disabled?"disabled":""}>${label}</button>`:""}</div></div>`;
@@ -1366,12 +1367,29 @@ function revealOnScroll(){
   const io=new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } }),{threshold:.15});
   els.forEach(e=>io.observe(e));
 }
+/* Guided example walkthrough: one banner per step while the example plant is loaded */
+const DEMO_TIPS={
+  company:"Larkfield Provisions is a fictional food plant. Its facility details and waste streams are already filled in. Check what it makes and which streams are ticked.",
+  identify:"Tera matched catalog options to the ticked streams, and three are selected for the example. Streams with no route, such as multilayer packaging, are named with the reason.",
+  data:"Tera asks only for the inputs the selected options need. The example values are filled in and labeled as example data. A blank value would show as not calculable, never zero.",
+  evaluate:"Each option is assessed on the same five considerations. Open a row to see the formula and inputs behind each number.",
+  compare:"The three options side by side at equal weights. Move a slider to see the ranking change. Evidence quality and hard constraints sit outside the score.",
+  prioritize:"Choose one option, top-ranked or not, and review the draft business case. The draft is for your approvers to review. Tera never approves spending."};
+function demoBar(){
+  if(!S.demoTour||!DEMO_TIPS[S.screen]) return "";
+  const i=SCREENS.findIndex(x=>x.id===S.screen), nx=SCREENS[i+1];
+  return `<section class="demobar" aria-label="Example walkthrough"><div><p class="demobar-k">Example walkthrough · Step ${i+1} of ${SCREENS.length} · fictional plant</p><p>${DEMO_TIPS[S.screen]}</p></div><div class="demobar-act">${nx?`<button class="btn primary small" data-act="go" data-id="${nx.id}">Next: ${esc(nx.name)}</button>`:""}<button class="btn small" data-act="demoExit">Hide guide</button></div></section>`;
+}
+function centerStep(){
+  const nv=document.querySelector("#rail .stepper"), cur=nv&&nv.querySelector('[aria-current="step"]');
+  if(nv&&cur&&nv.scrollWidth>nv.clientWidth) nv.scrollLeft=Math.max(0,cur.offsetLeft-(nv.clientWidth-cur.offsetWidth)/2);
+}
 function render(){
   renderRail();
   document.querySelector(".app").classList.toggle("solo",S.screen==="welcome");
   const v={welcome:vWelcome,company:vCompany,data:vData,clarify:vData,summary:vData,identify:vIdentify,evaluate:vEvaluate,compare:vCompare,prioritize:vPrioritize}[S.screen]||vCompany;
   const scrollY=window.scrollY;
-  document.getElementById("main").innerHTML=(S.screen==="welcome"?"":`<div class="row"><span class="tag t-sim" title="Sample sources and catalog values are fictional or illustrative">Capstone MVP · sample data is fictional</span>${SAMPLE_STATE==="ready"?tag("ai","Claude connected"):SAMPLE_STATE==="none"?tag("unverified","Public demo: AI features are off, everything else works"):""}</div>`)+v();
+  document.getElementById("main").innerHTML=(S.screen==="welcome"?"":`<div class="row"><span class="tag t-sim" title="Sample sources and catalog values are fictional or illustrative">Capstone MVP · sample data is fictional</span>${SAMPLE_STATE==="ready"?tag("ai","Claude connected"):SAMPLE_STATE==="none"?tag("unverified","Public demo: AI features are off, everything else works"):""}</div>${demoBar()}`)+v();
   if(S.screen==="compare") renderCompareBody();
   if(S.screen==="welcome") revealOnScroll();
   restoreOpen();
@@ -1392,6 +1410,7 @@ document.addEventListener("click",e=>{
   if(a==="go") return go(id);
   if(a==="reset"){ if(!T.resetArm){ T.resetArm=true; return renderRail(); } T.resetArm=false; const keep=T.save; S=fresh(); T.image=null; if(keep!=="unavailable"){ T.save="idle"; save(); } return go("welcome"); }
   if(a==="demo") return fillDemo();
+  if(a==="demoExit"){ S.demoTour=false; return change(); }
   if(a==="stop"){ const c=T[t.dataset.k+"Ctl"]; if(c) c.abort(); return; }
   if(a==="retrySave"){ T.save="saving"; renderSave(); return doSave(); }
   if(a==="coSample"){ S.company.srcText=SAMPLE_COMPANY; S.company.srcLabel="Larkfield Provisions Company Overview 2026 (fictional)"; if(!S.company.name) S.company.name="Larkfield Provisions"; return change(); }
@@ -1468,7 +1487,7 @@ function fillDemo(){
   const vals={offspec:360, purge:240, trim:220, film:120, flex:60, rigid:60, general:245, diverted:810, tipping:110, liquid_haul:95, ingredient_cost:1500};
   Object.entries(vals).forEach(([k,v])=>S.manual[k]={value:String(v),example:true});
   S.period="FY2026"; S.target={type:"own",text:"75% diversion by end of FY2028 (customer requirement, example)"}; S.budget={state:"known",lo:"100000",hi:"250000"}; S.reg={state:"unknown"};
-  S.restrict={footprint:"600",downtime:"80",storage:"20",none:false,notes:"Any line or donation change needs QA validation"}; S.confirmed=true; S.selected=["F1","F2","F3"]; S.cmp=["F1","F2","F3"]; S.screen="compare";
+  S.restrict={footprint:"600",downtime:"80",storage:"20",none:false,notes:"Any line or donation change needs QA validation"}; S.confirmed=true; S.selected=["F1","F2","F3"]; S.cmp=["F1","F2","F3"]; S.demoTour=true; S.screen="company";
   T.save=keep==="unavailable"?"unavailable":"idle"; save(); render(); window.scrollTo({top:0});
 }
 

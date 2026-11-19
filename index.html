@@ -591,6 +591,13 @@ input[type=text],input[type=number],select,textarea{border-radius:var(--radius-s
 .nl-foot b{color:var(--ink-secondary);font-weight:600}
 @media (max-width:820px){.nl-hero{padding:40px 24px 28px;border-radius:22px;gap:32px}.nl-contour{opacity:.5}.nl-trust{padding:36px 24px;border-radius:22px}.nl-card,.nl-cons{padding:22px}.nl-final{padding:24px}}
 @media (prefers-reduced-motion:reduce){.nl-track i{animation:none}}
+
+/* Guided example walkthrough banner */
+.demobar{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:0 0 18px;padding:14px 18px;border:1px solid var(--good-icon);border-left-width:4px;border-radius:0 10px 10px 0;background:var(--good-bg);color:var(--good-text)}
+.demobar p{margin:0;max-width:62ch;font-size:.92rem;line-height:1.45}
+.demobar .demobar-k{font-size:.74rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
+.demobar-act{display:flex;gap:8px;flex-wrap:wrap}
+@media (max-width:820px){.demobar{padding:12px 14px}.demobar-act{width:100%}}
 </style>
 
 <div class="app">
