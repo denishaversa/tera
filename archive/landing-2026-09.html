@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tera | Decision intelligence for sustainability</title>
+<meta name="description" content="Tera is an AI-powered decision intelligence platform that helps organizations identify, evaluate, and prioritize sustainability investments.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  --paper: #EFF2EE;
+  --paper-2: #E3E9E4;
+  --ink: #12211D;
+  --ink-soft: #46574F;
+  --moss: #2E5E4E;
+  --lake: #8DBDB6;
+  --signal: #D9A62B;
+  --line: rgba(18, 33, 29, 0.16);
+  --card: #F8FAF7;
+  --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --body: "Public Sans", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0F1A17;
+    --paper-2: #16261F;
+    --ink: #E6EEE9;
+    --ink-soft: #A3B5AC;
+    --moss: #6FB89F;
+    --lake: #3F7A72;
+    --signal: #E7B94A;
+    --line: rgba(230, 238, 233, 0.18);
+    --card: #14231E;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0F1A17;
+  --paper-2: #16261F;
+  --ink: #E6EEE9;
+  --ink-soft: #A3B5AC;
+  --moss: #6FB89F;
+  --lake: #3F7A72;
+  --signal: #E7B94A;
+  --line: rgba(230, 238, 233, 0.18);
+  --card: #14231E;
+}
+*, *::before, *::after { box-sizing: inherit; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 72px); }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.05; letter-spacing: -0.02em; margin: 0; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; border-radius: 4px; }
+
+.wrap { width: min(1120px, 100% - 48px); margin-inline: auto; }
+.section { padding: 112px 0; }
+.section-tint { background: var(--paper-2); }
+
+/* Nav */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.brand { font-family: var(--display); font-weight: 700; font-size: 26px; letter-spacing: -0.03em; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.brand-mark { width: 22px; height: 22px; }
+.nav-links { display: flex; gap: 28px; font-size: 15px; }
+.nav-links a { text-decoration: none; color: var(--ink-soft); }
+.nav-links a:hover { color: var(--ink); }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; font: 600 16px/1 var(--body); padding: 16px 26px; border-radius: 999px; border: 1.5px solid var(--ink); text-decoration: none; cursor: pointer; transition: background-color .15s, color .15s; }
+.btn-primary { background: var(--ink); color: var(--paper); }
+.btn-primary:hover { background: var(--moss); border-color: var(--moss); color: #fff; }
+.btn-ghost { background: transparent; color: var(--ink); }
+.btn-ghost:hover { background: var(--ink); color: var(--paper); }
+.btn-sm { padding: 12px 18px; font-size: 14px; }
+
+/* Hero */
+.hero { position: relative; overflow: hidden; padding: 96px 0 120px; }
+.hero .wrap { position: relative; }
+.topo { position: absolute; right: -180px; top: 50%; transform: translateY(-50%); width: 760px; height: 760px; color: var(--moss); pointer-events: none; }
+.topo path { fill: none; stroke: currentColor; stroke-width: 1.2; opacity: .55; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.topo path.decision { stroke: var(--signal); stroke-width: 3.5; opacity: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .topo path { stroke-dashoffset: 1; animation: draw 2.2s cubic-bezier(.3,.7,.2,1) forwards; animation-delay: calc(var(--i) * 70ms); }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+}
+.hero-copy { position: relative; max-width: 720px; }
+.hero h1 { font-size: clamp(44px, 7.4vw, 92px); font-weight: 700; letter-spacing: -0.035em; }
+.hero-lead { margin-top: 28px; max-width: 560px; font-size: 20px; color: var(--ink-soft); }
+.hero-cta { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 14px; }
+.hero-note { margin-top: 44px; font-size: 14px; color: var(--ink-soft); border-left: 3px solid var(--signal); padding-left: 14px; max-width: 420px; }
+
+/* Vision */
+.vision-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 72px; align-items: start; }
+.big-statement { font-size: clamp(34px, 5vw, 60px); font-weight: 600; }
+.big-statement span { display: block; color: var(--moss); }
+.prose p + p { margin-top: 18px; }
+.prose { color: var(--ink-soft); max-width: 520px; }
+.prose strong { color: var(--ink); font-weight: 600; }
+.lens-list { list-style: none; margin: 28px 0 0; padding: 0; border-top: 1px solid var(--line); }
+.lens-list li { padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--ink); font-weight: 500; }
+
+/* Why Tera */
+.why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+.section-title { font-size: clamp(32px, 4.4vw, 52px); }
+.why-grid .prose { margin-top: 24px; }
+.narrative { margin: 0; padding: 0; list-style: none; }
+.narrative li { display: grid; grid-template-columns: 110px 1fr; gap: 20px; align-items: baseline; padding: 22px 0; border-bottom: 1px solid var(--line); font-family: var(--display); font-size: 26px; font-weight: 600; letter-spacing: -0.015em; }
+.narrative li:first-child { border-top: 1px solid var(--line); }
+.narrative .who { font-family: var(--body); font-size: 15px; font-weight: 500; color: var(--moss); }
+.narrative li.last { color: var(--ink); }
+.narrative li.last .who { color: var(--ink); }
+.narrative li.last .line { background: linear-gradient(transparent 62%, var(--signal) 62%, var(--signal) 92%, transparent 92%); }
+.pull { margin-top: 32px; font-size: 15px; color: var(--ink-soft); max-width: 440px; }
+
+/* Use case */
+.usecase { max-width: 820px; }
+.usecase h2 { font-size: clamp(36px, 5.4vw, 68px); }
+.question { margin-top: 36px; padding: 28px 32px; background: var(--ink); color: var(--paper); border-radius: 20px; font-family: var(--display); font-size: clamp(22px, 2.6vw, 30px); line-height: 1.25; letter-spacing: -0.01em; font-weight: 500; }
+.chips { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { border: 1px solid var(--line); background: var(--card); padding: 8px 16px; border-radius: 999px; font-size: 15px; }
+.usecase .prose { margin-top: 28px; }
+
+/* How */
+.how-head { max-width: 640px; }
+.steps { margin-top: 56px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; counter-reset: step; }
+.step { position: relative; padding: 0 28px 0 0; }
+.step::before { content: ""; position: absolute; top: 15px; left: 34px; right: 0; height: 2px; background: var(--line); }
+.step:last-child::before { display: none; }
+.step-dot { position: relative; width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--ink); background: var(--paper); display: grid; place-items: center; font: 600 14px var(--body); }
+.step:last-child .step-dot { background: var(--signal); border-color: var(--signal); color: #12211D; }
+.step h3 { margin-top: 24px; font-size: 28px; }
+.step p { margin-top: 10px; font-size: 16px; color: var(--ink-soft); }
+.tagline-big { margin-top: 72px; font-family: var(--display); font-size: clamp(30px, 4.4vw, 54px); font-weight: 700; letter-spacing: -0.03em; }
+.tagline-big em { font-style: normal; color: var(--moss); }
+
+/* Demo */
+.demo-head { max-width: 640px; }
+.demo { margin-top: 48px; display: grid; grid-template-columns: 340px 1fr; gap: 24px; align-items: start; }
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 32px; }
+.panel h3 { font-size: 20px; letter-spacing: -0.01em; }
+.you-ask { font-family: var(--display); font-size: 22px; line-height: 1.25; font-weight: 500; margin-top: 12px; }
+.ctx { margin: 28px 0 0; display: grid; gap: 0; }
+.ctx div { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 15px; }
+.ctx dt { color: var(--ink-soft); }
+.ctx dd { margin: 0; font-weight: 600; }
+.rec-title { margin-top: 10px; font-size: clamp(28px, 3.4vw, 40px); }
+.metrics { margin-top: 28px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.metric { border-top: 3px solid var(--moss); padding-top: 10px; }
+.metric.warn { border-color: var(--signal); }
+.metric .k { font-size: 13px; color: var(--ink-soft); line-height: 1.3; }
+.metric .v { margin-top: 4px; font-family: var(--display); font-size: 21px; font-weight: 600; }
+.why { margin-top: 28px; font-size: 16px; color: var(--ink-soft); max-width: 560px; }
+.why b { color: var(--ink); font-weight: 600; }
+.demo-actions { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
+.btn[aria-expanded="true"] { background: var(--ink); color: var(--paper); }
+.drawer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s ease; }
+.drawer.open { grid-template-rows: 1fr; }
+.drawer > div { overflow: hidden; }
+.drawer-inner { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--line); }
+.drawer h4 { margin: 0 0 14px; font: 600 16px var(--body); }
+.evidence-list { margin: 0; padding-left: 20px; color: var(--ink-soft); font-size: 15px; }
+.evidence-list li + li { margin-top: 8px; }
+.alts { display: grid; gap: 14px; }
+.alt { display: grid; grid-template-columns: 200px 1fr 44px; gap: 14px; align-items: center; font-size: 15px; }
+.bar { height: 10px; border-radius: 6px; background: var(--paper-2); overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--lake); border-radius: 6px; }
+.alt.top .bar i { background: var(--signal); }
+.alt.top .name { font-weight: 600; }
+.alt .score { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+.alt-note { margin-top: 14px; font-size: 14px; color: var(--ink-soft); }
+.disclaimer { margin-top: 22px; font-size: 14px; color: var(--ink-soft); }
+@media (prefers-reduced-motion: reduce) { .drawer { transition: none; } }
+
+/* Beyond */
+.beyond-head { max-width: 640px; }
+.domains { margin-top: 48px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; border-top: 1px solid var(--line); }
+.domain { padding: 28px 22px 8px 0; }
+.domain + .domain { padding-left: 22px; border-left: 1px solid var(--line); }
+.domain h3 { font-size: 22px; letter-spacing: -0.01em; }
+.domain p { margin-top: 12px; font-size: 15px; color: var(--ink-soft); }
+.domain .status { margin-top: 16px; font-size: 13px; font-weight: 600; color: var(--moss); }
+.domain.live .status { color: var(--ink); }
+.domain.live .status::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--signal); margin-right: 8px; }
+
+/* Footer */
+.closing { text-align: left; }
+.closing h2 { font-size: clamp(38px, 6.4vw, 84px); font-weight: 700; letter-spacing: -0.035em; max-width: 900px; }
+.closing p { margin-top: 24px; color: var(--ink-soft); max-width: 520px; font-size: 19px; }
+.closing .hero-cta { margin-top: 36px; }
+footer { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: 14px; color: var(--ink-soft); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+.footer-disclaimer { flex-basis: 100%; max-width: 760px; margin-top: 12px; font-size: 13px; line-height: 1.55; }
+
+/* Responsive */
+@media (max-width: 960px) {
+  .section { padding: 80px 0; }
+  .vision-grid, .why-grid { grid-template-columns: 1fr; gap: 40px; }
+  .steps { grid-template-columns: 1fr 1fr; row-gap: 48px; }
+  .step:nth-child(2)::before { display: none; }
+  .demo { grid-template-columns: 1fr; }
+  .domains { grid-template-columns: 1fr 1fr; }
+  .domain, .domain + .domain { padding: 24px 16px 8px 0; border-left: 0; border-bottom: 1px solid var(--line); }
+  .topo { right: -320px; opacity: .55; }
+  .nav-links { display: none; }
+}
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  .wrap { width: min(1120px, 100% - 36px); }
+  .hero { padding: 56px 0 80px; }
+  .steps { grid-template-columns: 1fr; }
+  .step::before { display: none; }
+  .metrics { grid-template-columns: 1fr 1fr; }
+  .alt { grid-template-columns: 1fr 44px; }
+  .alt .bar { grid-column: 1 / -1; grid-row: 2; }
+  .narrative li { grid-template-columns: 1fr; gap: 4px; font-size: 24px; }
+  .domains { grid-template-columns: 1fr; }
+  .panel { padding: 24px; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Tera home">
+      <svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <circle cx="12" cy="12" r="10.2"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2.4" fill="var(--signal)" stroke="var(--signal)"/>
+      </svg>
+      Tera
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#why">Why Tera</a>
+      <a href="#how">How it works</a>
+      <a href="#demo">Demo</a>
+      <a href="#beyond">Beyond waste</a>
+    </nav>
+    <a class="btn btn-primary btn-sm" href="#demo">Explore Tera</a>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero" aria-labelledby="hero-h">
+  <svg class="topo" id="topo" viewBox="0 0 600 600" aria-hidden="true"></svg>
+  <div class="wrap">
+    <div class="hero-copy">
+      <h1 id="hero-h">Turn sustainability data into better decisions.</h1>
+      <p class="hero-lead">Tera is an AI-powered decision intelligence platform that helps organizations identify, evaluate, and prioritize sustainability investments.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#demo">Explore Tera</a>
+        <a class="btn btn-ghost" href="#how">See how it works</a>
+      </div>
+      <p class="hero-note">Currently in development as a Columbia University Technology Management Capstone.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tint" id="vision" aria-labelledby="vision-h">
+  <div class="wrap vision-grid">
+    <h2 class="big-statement" id="vision-h">Sustainability doesn't need another dashboard.<span>It needs a decision layer.</span></h2>
+    <div>
+      <div class="prose">
+        <p>Organizations increasingly have access to sustainability data across waste, energy, carbon, water, supply chains, and other operational areas. Having more data does not make the next decision obvious.</p>
+        <p><strong>Tera is designed to become the decision layer between sustainability data and organizational action.</strong> It evaluates potential initiatives across four lenses, then surfaces recommendations, evidence, assumptions, and trade-offs. The final decision stays with the organization.</p>
+      </div>
+      <ul class="lens-list">
+        <li>Environmental impact</li>
+        <li>Financial feasibility</li>
+        <li>Organizational priorities</li>
+        <li>Implementation feasibility</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="why" aria-labelledby="why-h">
+  <div class="wrap why-grid">
+    <div>
+      <h2 class="section-title" id="why-h">Why Tera?</h2>
+      <div class="prose">
+        <p>The name evokes <em>terra</em>, Earth, while keeping the concise, technology-oriented character of a modern software product.</p>
+        <p>Organizations operate within interconnected environmental, financial, and operational systems. Sustainability decisions cannot be made using environmental impact alone. Tera helps organizations understand those relationships and make more informed choices.</p>
+      </div>
+      <p class="pull">Better decisions for the systems we depend on.</p>
+    </div>
+    <ol class="narrative" aria-label="Brand narrative">
+      <li><span class="who">The Earth</span><span class="line">provides the context.</span></li>
+      <li><span class="who">Data</span><span class="line">provides the evidence.</span></li>
+      <li><span class="who">Tera</span><span class="line">provides the intelligence.</span></li>
+      <li class="last"><span class="who">People</span><span class="line">make the decision.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section-tint" id="usecase" aria-labelledby="usecase-h">
+  <div class="wrap usecase">
+    <h2 id="usecase-h">Start with waste. Build for sustainability.</h2>
+    <p class="question">Given an organization's waste profile, sustainability targets, budget, and operational constraints, which zero-waste initiatives should it prioritize?</p>
+    <div class="chips" aria-label="Potential interventions">
+      <span class="chip">Waste sorting improvements</span>
+      <span class="chip">Composting</span>
+      <span class="chip">Reusable packaging</span>
+      <span class="chip">Supplier changes</span>
+      <span class="chip">Material substitution</span>
+      <span class="chip">Employee programs</span>
+      <span class="chip">Operational redesign</span>
+    </div>
+    <div class="prose">
+      <p>Zero waste is the first domain for testing Tera's broader decision-intelligence framework, and the focus of the Capstone application.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how" aria-labelledby="how-h">
+  <div class="wrap">
+    <div class="how-head">
+      <h2 class="section-title" id="how-h">How Tera works</h2>
+    </div>
+    <ol class="steps" style="list-style:none;padding:0;margin-bottom:0;margin-left:0;">
+      <li class="step">
+        <div class="step-dot">1</div>
+        <h3>Understand</h3>
+        <p>Bring together sustainability, operational, financial, and organizational information.</p>
+      </li>
+      <li class="step">
+        <div class="step-dot">2</div>
+        <h3>Evaluate</h3>
+        <p>Assess potential interventions across environmental impact, cost, feasibility, and organizational priorities.</p>
+      </li>
+      <li class="step">
+        <div class="step-dot">3</div>
+        <h3>Prioritize</h3>
+        <p>Compare potential actions to identify the opportunities that warrant further consideration.</p>
+      </li>
+      <li class="step">
+        <div class="step-dot">4</div>
+        <h3>Decide</h3>
+        <p>Review recommendations, evidence, assumptions, and trade-offs, then make the final call.</p>
+      </li>
+    </ol>
+    <p class="tagline-big">Tera recommends. <em>Humans decide.</em></p>
+  </div>
+</section>
+
+<section class="section section-tint" id="demo" aria-labelledby="demo-h">
+  <div class="wrap">
+    <div class="demo-head">
+      <h2 class="section-title" id="demo-h">Ask Tera what to do next.</h2>
+    </div>
+    <div class="demo">
+      <div class="panel" aria-label="Question and organization context">
+        <h3>You ask</h3>
+        <p class="you-ask">What sustainability initiative should we prioritize this year?</p>
+        <dl class="ctx">
+          <div><dt>Budget</dt><dd>$500K</dd></div>
+          <div><dt>Goal</dt><dd>Reduce waste</dd></div>
+          <div><dt>Timeline</dt><dd>12 months</dd></div>
+          <div><dt>Current diversion rate</dt><dd>42%</dd></div>
+        </dl>
+      </div>
+
+      <div class="panel" aria-live="polite">
+        <h3>Tera recommendation</h3>
+        <p class="rec-title" style="font-family:var(--display);font-weight:600;letter-spacing:-0.02em;line-height:1.1;">Prioritize waste sorting infrastructure improvements</p>
+        <div class="metrics">
+          <div class="metric"><div class="k">Potential impact</div><div class="v">High</div></div>
+          <div class="metric warn"><div class="k">Investment</div><div class="v">Moderate</div></div>
+          <div class="metric"><div class="k">Implementation complexity</div><div class="v">Low to moderate</div></div>
+          <div class="metric"><div class="k">Strategic alignment</div><div class="v">High</div></div>
+        </div>
+        <p class="why"><b>Why Tera surfaced this.</b> The intervention may provide comparatively high waste-diversion potential while requiring less capital and organizational change than infrastructure-heavy alternatives.</p>
+
+        <div class="demo-actions">
+          <button class="btn btn-primary btn-sm" type="button" id="btn-evidence" aria-expanded="false" aria-controls="drawer-evidence">View evidence</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="btn-alts" aria-expanded="false" aria-controls="drawer-alts">Compare alternatives</button>
+        </div>
+
+        <div class="drawer" id="drawer-evidence">
+          <div>
+            <div class="drawer-inner">
+              <h4>Evidence and assumptions</h4>
+              <ul class="evidence-list">
+                <li>Contamination in recycling and compost streams is a common cause of low diversion, and better sorting targets it directly.</li>
+                <li>Assumes existing hauler contracts already accept the sorted material streams.</li>
+                <li>Assumes signage and bin changes can be phased within the 12-month timeline.</li>
+                <li>Diversion gains depend on participation, so an employee program is a likely companion initiative.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="drawer" id="drawer-alts">
+          <div>
+            <div class="drawer-inner">
+              <h4>Alternatives ranked by overall fit</h4>
+              <div class="alts">
+                <div class="alt top"><span class="name">Sorting infrastructure</span><span class="bar"><i style="width:86%"></i></span><span class="score">86</span></div>
+                <div class="alt"><span class="name">Composting program</span><span class="bar"><i style="width:74%"></i></span><span class="score">74</span></div>
+                <div class="alt"><span class="name">Reusable packaging</span><span class="bar"><i style="width:63%"></i></span><span class="score">63</span></div>
+                <div class="alt"><span class="name">Supplier change</span><span class="bar"><i style="width:51%"></i></span><span class="score">51</span></div>
+              </div>
+              <p class="alt-note">Scores are a composite of impact, cost, feasibility, and alignment. You can weight them differently for your organization.</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="disclaimer">Illustrative prototype. Recommendations shown use demonstration data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="beyond" aria-labelledby="beyond-h">
+  <div class="wrap">
+    <div class="beyond-head">
+      <h2 class="section-title" id="beyond-h">One decision layer. Multiple sustainability challenges.</h2>
+    </div>
+    <div class="domains">
+      <div class="domain live">
+        <h3>Waste and circularity</h3>
+        <p>Which waste-reduction initiatives should we prioritize?</p>
+        <p class="status">Capstone focus</p>
+      </div>
+      <div class="domain">
+        <h3>Energy</h3>
+        <p>Where should efficiency resources be allocated?</p>
+        <p class="status">Future domain</p>
+      </div>
+      <div class="domain">
+        <h3>Carbon</h3>
+        <p>Which decarbonization initiatives should be evaluated first?</p>
+        <p class="status">Future domain</p>
+      </div>
+      <div class="domain">
+        <h3>Water</h3>
+        <p>Which interventions could improve resource efficiency?</p>
+        <p class="status">Future domain</p>
+      </div>
+      <div class="domain">
+        <h3>Supply chain</h3>
+        <p>Where are sustainability risks and improvement opportunities concentrated?</p>
+        <p class="status">Future domain</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tint closing" aria-labelledby="close-h">
+  <div class="wrap">
+    <h2 id="close-h">Tera helps organizations decide what comes next.</h2>
+    <p>Tera is a Columbia University Technology Management Capstone project, currently in development.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#demo">Explore Tera</a>
+      <a class="btn btn-ghost" href="#how">See how it works</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Tera. Decision intelligence for sustainability.</span>
+    <span>Columbia University Technology Management Capstone</span>
+    <p class="footer-disclaimer">Tera is a student Capstone project developed as part of the Technology Management program at Columbia University. It is not a commercial product and is not affiliated with or endorsed by Columbia University. Recommendations shown are illustrative, use demonstration data, and should not be relied on for real organizational decisions.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Topographic contours: the "terra" motif. One gold ring marks the decision.
+  var svg = document.getElementById('topo');
+  var NS = 'http://www.w3.org/2000/svg';
+  var rings = 20, cx = 300, cy = 300, decisionRing = 12;
+  for (var i = 0; i < rings; i++) {
+    var base = 26 + i * 13.5, pts = [], steps = 140;
+    for (var s = 0; s < steps; s++) {
+      var a = (s / steps) * Math.PI * 2;
+      var r = base + 7 * Math.sin(3 * a + i * 0.35) + 5 * Math.sin(5 * a - i * 0.25) + i * 0.9 * Math.sin(2 * a + 1.2);
+      pts.push((cx + r * Math.cos(a)).toFixed(1) + ',' + (cy + r * Math.sin(a)).toFixed(1));
+    }
+    var p = document.createElementNS(NS, 'path');
+    p.setAttribute('d', 'M' + pts.join('L') + 'Z');
+    p.setAttribute('pathLength', '1');
+    p.style.setProperty('--i', i);
+    if (i === decisionRing) p.setAttribute('class', 'decision');
+    svg.appendChild(p);
+  }
+
+  // Demo drawers
+  function wire(btnId, drawerId) {
+    var btn = document.getElementById(btnId), drawer = document.getElementById(drawerId);
+    btn.addEventListener('click', function () {
+      var open = drawer.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+  wire('btn-evidence', 'drawer-evidence');
+  wire('btn-alts', 'drawer-alts');
+})();
+</script>
+</body>
+</html>
