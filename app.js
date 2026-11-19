@@ -1409,6 +1409,7 @@ const change = () => { save(); T.keepScroll=true; render(); };
 document.addEventListener("click",e=>{
   const t=e.target.closest("[data-act]"); if(!t||t.disabled) return; const a=t.dataset.act, id=t.dataset.id;
   if(a!=="reset") T.resetArm=false;
+  if(a==="go"&&id==="company"&&S.screen==="welcome"&&Object.values(S.manual||{}).some(m=>m&&m.example)) return startBlank();
   if(a==="go") return go(id);
   if(a==="reset"){ if(!T.resetArm){ T.resetArm=true; return renderRail(); } T.resetArm=false; const keep=T.save; S=fresh(); T.image=null; if(keep!=="unavailable"){ T.save="idle"; save(); } return go("welcome"); }
   if(a==="demo") return fillDemo();
@@ -1482,6 +1483,8 @@ document.addEventListener("input",e=>{
   if(t.dataset.w){ if(!T.lastOrder) T.lastOrder=orderOf(S.cmp); S.w[t.dataset.w]=+v; T.change=""; renderCompareBody(); return; }
   if(t.dataset.bc!=null){ const was=S.bcConfirmed; S.bc[+t.dataset.bc].t=v; S.bcEdited=true; S.bcConfirmed=false; save(); if(was){ const r=document.getElementById("bcConfirmRow"); if(r) r.innerHTML=bcConfirmRow("Your edit withdrew the confirmation. Confirm again when you're done."); renderRail(); } }
 });
+/* "Start with my facility" from the welcome page opens a blank plant when the fictional example is loaded; the user's own work is kept */
+function startBlank(){ const keep=T.save; S=fresh(); T.image=null; if(keep!=="unavailable") T.save="idle"; go("company"); }
 function fillDemo(){
   const keep=T.save; S=fresh();
   Object.assign(S.company,{name:"Larkfield Provisions", srcLabel:"Larkfield Provisions Company Overview 2026 (fictional)", srcText:SAMPLE_COMPANY});
