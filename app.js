@@ -1270,74 +1270,96 @@ function vPrioritize(){
   return o;
 }
 
+/* Primary lockup: open loop plus wordmark, as outlines */
+const LOGO_IMG=`<img class="nl-logo" src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2079.06%2032.00%22%20role%3D%22img%22%20aria-label%3D%22Tera%22%3E%3Ctitle%3ETera%3C/title%3E%3Cg%20transform%3D%22translate%28-4.533333333333333%200%29%20scale%281.3333333333333333%29%22%3E%3Cpath%20d%3D%22M18.89%2010.78A7%207%200%201%201%2013.22%205.11%22%20fill%3D%22none%22%20stroke-width%3D%223.2%22%20stroke-linecap%3D%22round%22%20stroke%3D%22%23287A56%22/%3E%3Ccircle%20cx%3D%2216.95%22%20cy%3D%227.05%22%20r%3D%222%22%20fill%3D%22%23B98309%22/%3E%3C/g%3E%3Cpath%20d%3D%22M32.46%2024.25V7.75H36.06V24.25ZM27.83%2010.8V7.75H40.68V10.8ZM48.08%2024.6Q46.38%2024.6%2045.13%2024.12Q43.88%2023.65%2043.05%2022.76Q42.21%2021.88%2041.8%2020.65Q41.38%2019.43%2041.38%2017.93Q41.38%2016.43%2041.8%2015.12Q42.21%2013.82%2043.01%2012.85Q43.81%2011.88%2045.02%2011.32Q46.23%2010.77%2047.83%2010.77Q49.38%2010.77%2050.56%2011.3Q51.73%2011.82%2052.48%2012.8Q53.23%2013.77%2053.55%2015.16Q53.86%2016.55%2053.71%2018.27L43.68%2018.4V16.4L51.36%2016.3L50.41%2017.38Q50.56%2016.1%2050.26%2015.26Q49.96%2014.42%2049.33%2014.01Q48.71%2013.6%2047.86%2013.6Q46.88%2013.6%2046.21%2014.11Q45.53%2014.62%2045.18%2015.56Q44.83%2016.5%2044.83%2017.82Q44.83%2019.93%2045.7%2020.93Q46.56%2021.93%2048.08%2021.93Q48.78%2021.93%2049.26%2021.74Q49.73%2021.55%2050.03%2021.24Q50.33%2020.93%2050.5%2020.51Q50.66%2020.1%2050.71%2019.68L53.91%2020.15Q53.81%2021.05%2053.43%2021.85Q53.06%2022.65%2052.37%2023.26Q51.68%2023.88%2050.62%2024.24Q49.56%2024.6%2048.08%2024.6ZM55.48%2024.25V17.68V11.12H58.53L58.48%2016H58.86Q59.03%2014.15%2059.51%2013.01Q59.98%2011.88%2060.78%2011.35Q61.58%2010.82%2062.71%2010.82Q63.01%2010.82%2063.36%2010.89Q63.71%2010.95%2064.11%2011.07L63.93%2014.97Q63.48%2014.75%2063.02%2014.65Q62.56%2014.55%2062.18%2014.55Q61.26%2014.55%2060.6%2015.02Q59.93%2015.5%2059.56%2016.41Q59.18%2017.32%2059.08%2018.65V24.25ZM68.53%2024.6Q67.48%2024.6%2066.62%2024.2Q65.76%2023.8%2065.25%2022.99Q64.73%2022.18%2064.73%2020.93Q64.73%2019.8%2065.16%2019.06Q65.58%2018.32%2066.38%2017.86Q67.18%2017.4%2068.27%2017.12Q69.36%2016.85%2070.63%2016.65Q71.66%2016.48%2072.23%2016.35Q72.81%2016.23%2073.05%2015.99Q73.28%2015.75%2073.28%2015.3Q73.28%2014.52%2072.75%2014.05Q72.21%2013.57%2071.16%2013.57Q70.51%2013.57%2069.9%2013.81Q69.28%2014.05%2068.87%2014.57Q68.46%2015.1%2068.36%2015.95L65.16%2015.28Q65.31%2014.05%2065.86%2013.2Q66.41%2012.35%2067.23%2011.81Q68.06%2011.27%2069.1%2011.02Q70.13%2010.77%2071.26%2010.77Q73.16%2010.77%2074.38%2011.42Q75.61%2012.07%2076.21%2013.38Q76.81%2014.67%2076.81%2016.65V18.95Q76.83%2019.8%2076.85%2020.7Q76.86%2021.6%2076.9%2022.49Q76.93%2023.38%2077.01%2024.25H73.83Q73.78%2023.48%2073.73%2022.61Q73.68%2021.75%2073.66%2020.8H73.33Q73.08%2021.85%2072.43%2022.71Q71.78%2023.57%2070.8%2024.09Q69.81%2024.6%2068.53%2024.6ZM70.03%2021.95Q70.51%2021.95%2071.02%2021.77Q71.53%2021.6%2072.01%2021.24Q72.48%2020.88%2072.83%2020.3Q73.18%2019.73%2073.33%2018.95L73.31%2017.48L73.91%2017.5Q73.56%2017.82%2073.01%2018.01Q72.46%2018.2%2071.82%2018.31Q71.18%2018.43%2070.55%2018.55Q69.91%2018.68%2069.4%2018.88Q68.88%2019.07%2068.57%2019.42Q68.26%2019.77%2068.26%2020.38Q68.26%2021.12%2068.76%2021.54Q69.26%2021.95%2070.03%2021.95Z%22%20fill%3D%22%231B2420%22/%3E%3C/svg%3E" alt="Tera" height="32">`;
 function vWelcome(){
   const status = SAMPLE_STATE==="ready"
     ? `<span class="lp-dot ok"></span>Signed in to Claude: AI features on${T.save==="unavailable"?"":", work saved as you go"}`
     : SAMPLE_STATE==="none"
     ? `<span class="lp-dot"></span>Public demo: explore every step. AI features and saving are off.`
     : `<span class="lp-dot"></span>Checking Claude connection…`;
-  const row=(rank,name,score,w,top,note)=>`<div class="lp-row ${top?"top":""}"><span class="lp-rank">${rank}</span><div class="lp-rn"><b>${name}</b><div class="lp-track"><i style="width:${w}%"></i></div>${top?`<span class="tag t-verified" style="align-self:flex-start">${note}</span>`:`<span class="lp-note">${note}</span>`}</div><span class="lp-score">${score}</span></div>`;
-  const steps=SCREENS.map((x,k)=>`<li><span class="lp-sd"></span><b>${esc(x.name)}</b></li>`).join("");
-  return `<div class="lp">
-  <nav class="lp-nav"><img class="lp-logo" src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2079.06%2032.00%22%20role%3D%22img%22%20aria-label%3D%22Tera%22%3E%3Ctitle%3ETera%3C/title%3E%3Cg%20transform%3D%22translate%28-4.533333333333333%200%29%20scale%281.3333333333333333%29%22%3E%3Cpath%20d%3D%22M18.89%2010.78A7%207%200%201%201%2013.22%205.11%22%20fill%3D%22none%22%20stroke-width%3D%223.2%22%20stroke-linecap%3D%22round%22%20stroke%3D%22%23287A56%22/%3E%3Ccircle%20cx%3D%2216.95%22%20cy%3D%227.05%22%20r%3D%222%22%20fill%3D%22%23B98309%22/%3E%3C/g%3E%3Cpath%20d%3D%22M32.46%2024.25V7.75H36.06V24.25ZM27.83%2010.8V7.75H40.68V10.8ZM48.08%2024.6Q46.38%2024.6%2045.13%2024.12Q43.88%2023.65%2043.05%2022.76Q42.21%2021.88%2041.8%2020.65Q41.38%2019.43%2041.38%2017.93Q41.38%2016.43%2041.8%2015.12Q42.21%2013.82%2043.01%2012.85Q43.81%2011.88%2045.02%2011.32Q46.23%2010.77%2047.83%2010.77Q49.38%2010.77%2050.56%2011.3Q51.73%2011.82%2052.48%2012.8Q53.23%2013.77%2053.55%2015.16Q53.86%2016.55%2053.71%2018.27L43.68%2018.4V16.4L51.36%2016.3L50.41%2017.38Q50.56%2016.1%2050.26%2015.26Q49.96%2014.42%2049.33%2014.01Q48.71%2013.6%2047.86%2013.6Q46.88%2013.6%2046.21%2014.11Q45.53%2014.62%2045.18%2015.56Q44.83%2016.5%2044.83%2017.82Q44.83%2019.93%2045.7%2020.93Q46.56%2021.93%2048.08%2021.93Q48.78%2021.93%2049.26%2021.74Q49.73%2021.55%2050.03%2021.24Q50.33%2020.93%2050.5%2020.51Q50.66%2020.1%2050.71%2019.68L53.91%2020.15Q53.81%2021.05%2053.43%2021.85Q53.06%2022.65%2052.37%2023.26Q51.68%2023.88%2050.62%2024.24Q49.56%2024.6%2048.08%2024.6ZM55.48%2024.25V17.68V11.12H58.53L58.48%2016H58.86Q59.03%2014.15%2059.51%2013.01Q59.98%2011.88%2060.78%2011.35Q61.58%2010.82%2062.71%2010.82Q63.01%2010.82%2063.36%2010.89Q63.71%2010.95%2064.11%2011.07L63.93%2014.97Q63.48%2014.75%2063.02%2014.65Q62.56%2014.55%2062.18%2014.55Q61.26%2014.55%2060.6%2015.02Q59.93%2015.5%2059.56%2016.41Q59.18%2017.32%2059.08%2018.65V24.25ZM68.53%2024.6Q67.48%2024.6%2066.62%2024.2Q65.76%2023.8%2065.25%2022.99Q64.73%2022.18%2064.73%2020.93Q64.73%2019.8%2065.16%2019.06Q65.58%2018.32%2066.38%2017.86Q67.18%2017.4%2068.27%2017.12Q69.36%2016.85%2070.63%2016.65Q71.66%2016.48%2072.23%2016.35Q72.81%2016.23%2073.05%2015.99Q73.28%2015.75%2073.28%2015.3Q73.28%2014.52%2072.75%2014.05Q72.21%2013.57%2071.16%2013.57Q70.51%2013.57%2069.9%2013.81Q69.28%2014.05%2068.87%2014.57Q68.46%2015.1%2068.36%2015.95L65.16%2015.28Q65.31%2014.05%2065.86%2013.2Q66.41%2012.35%2067.23%2011.81Q68.06%2011.27%2069.1%2011.02Q70.13%2010.77%2071.26%2010.77Q73.16%2010.77%2074.38%2011.42Q75.61%2012.07%2076.21%2013.38Q76.81%2014.67%2076.81%2016.65V18.95Q76.83%2019.8%2076.85%2020.7Q76.86%2021.6%2076.9%2022.49Q76.93%2023.38%2077.01%2024.25H73.83Q73.78%2023.48%2073.73%2022.61Q73.68%2021.75%2073.66%2020.8H73.33Q73.08%2021.85%2072.43%2022.71Q71.78%2023.57%2070.8%2024.09Q69.81%2024.6%2068.53%2024.6ZM70.03%2021.95Q70.51%2021.95%2071.02%2021.77Q71.53%2021.6%2072.01%2021.24Q72.48%2020.88%2072.83%2020.3Q73.18%2019.73%2073.33%2018.95L73.31%2017.48L73.91%2017.5Q73.56%2017.82%2073.01%2018.01Q72.46%2018.2%2071.82%2018.31Q71.18%2018.43%2070.55%2018.55Q69.91%2018.68%2069.4%2018.88Q68.88%2019.07%2068.57%2019.42Q68.26%2019.77%2068.26%2020.38Q68.26%2021.12%2068.76%2021.54Q69.26%2021.95%2070.03%2021.95Z%22%20fill%3D%22%231B2420%22/%3E%3C/svg%3E" alt="Tera" height="30"><div class="lp-navr"><button class="link" data-act="demo">See an example</button><button class="btn primary small" data-act="go" data-id="company">Start</button></div></nav>
+  const check=`<svg class="nl-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12l5 5L20 7"/></svg>`;
+  const warn=`<svg class="nl-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3L2 21h20L12 3z"/><path d="M12 10v5"/><path d="M12 18h.01"/></svg>`;
+  /* Example plant figures: the same values the comparison screen computes for the fictional Larkfield Provisions plant at equal weights */
+  const rows=[["1","Organics to digestion","3.75",75,"Reaches the 75% diversion target","Moderate"],["2","Changeover optimization","3.25",65,"Fastest payback: 1.1 years","Low"],["3","Food donation","2.50",50,"Lowest cost to start","Moderate"]];
+  const row=([r,n,s,w,note],i)=>`<div class="nl-row${i===0?" top":""}"><span class="nl-rank">${r}</span><div class="nl-rn"><div class="nl-rh"><b>${n}</b><span class="num">${s}</span></div><div class="nl-track"><i style="width:${w}%"></i></div><span class="nl-note">${note}</span></div></div>`;
+  const ev=([r,n,,,,q])=>`<li><span>${n}</span><span class="nl-q ${q==="Low"?"nl-low":"nl-mod"}">${q==="Low"?warn:check}${q}</span></li>`;
+  const cons=[["01","Environmental impact","Tonnes prevented or diverted, always reported separately."],["02","Financial viability","Upfront cost, running cost, payback and five-year NPV."],["03","Operational feasibility","Process fit, space, staffing and downtime."],["04","Implementation risk","The main risk for each option, rated by likelihood and impact."],["05","Evidence quality","How much of the case rests on records rather than estimates."]];
+  const blurb={company:"Enter your company and facility, then tick the waste streams you have.",identify:"See options matched to your streams, or add your own idea.",data:"Type or upload values. Tera asks only for what your chosen options need.",evaluate:"Open each option, check the five considerations and correct any input.",compare:"Put options side by side and adjust the weights.",prioritize:"Choose one and edit a seven-section draft for your approvers."};
+  return `<div class="nl">
+  <nav class="nl-nav" aria-label="Main">${LOGO_IMG}<div class="nl-navr"><a class="nl-link" href="#nl-why">Why Tera</a><a class="nl-link" href="#nl-cons">What Tera weighs</a><a class="nl-link" href="#nl-how">How it works</a><button class="btn primary nl-pill" data-act="demo">Try the demo</button></div></nav>
 
-  <section class="lp-hero">
-    <div class="lp-copy">
-      <div class="eyebrow">Zero-waste investment decisions</div>
-      <h1>Turn your plant's <span class="accent">waste</span> data into a business case</h1>
-      <p class="lp-lede">Find, compare and justify zero-waste investments for a food and beverage plant. You make the decision; Tera shows the evidence behind it.</p>
-      <div class="lp-cta"><button class="btn primary" data-act="go" data-id="company">Start with my facility</button><button class="btn" data-act="demo">Try with an example plant</button></div>
-      <p class="lp-status">${status}</p>
+  <section class="nl-hero" aria-labelledby="nl-h1">
+    <svg class="nl-contour" viewBox="0 0 600 480" aria-hidden="true" focusable="false"><g fill="none" stroke="#1E5E42" stroke-width="1.2"><path d="M520 240c0 110-90 190-210 190S80 360 80 250 170 50 300 50s220 80 220 190z"/><path d="M480 240c0 88-72 152-170 152S120 340 120 252 190 90 300 90s180 62 180 150z"/><path d="M440 242c0 66-56 116-132 116S160 318 160 254 212 130 302 130s138 46 138 112z"/><path d="M400 244c0 46-40 80-94 80s-106-28-106-72 38-82 102-82 98 30 98 74z"/><path d="M360 246c0 24-22 44-54 44s-66-16-66-40 24-46 62-46 58 18 58 42z"/><path d="M560 236c0 132-108 230-252 230S40 380 40 248 150 10 300 10s260 94 260 226z"/></g></svg>
+    <div class="nl-hcopy">
+      <p class="nl-eyebrow">Decision intelligence for sustainability</p>
+      <h1 id="nl-h1">You make the decision. Tera shows the <span class="nl-gold">evidence</span>.</h1>
+      <p class="nl-lede">Tera helps sustainability teams at food and beverage plants find, compare and justify zero-waste investments, with every figure traced to its input and every gap in the data shown.</p>
+      <div class="nl-cta"><button class="btn nl-pill nl-on-dark" data-act="demo">Try with an example plant</button><button class="btn nl-pill nl-ghost" data-act="go" data-id="company">Start with my facility</button></div>
+      <p class="nl-status">${status}</p>
     </div>
-    <div class="lp-shotwrap">
-    <figure class="lp-shot" aria-label="Preview of Tera's comparison for the example plant">
-      <div class="lp-shot-h"><span>Comparison</span><span class="lp-tag">Example plant (fictional)</span></div>
-      ${row("1","Organics to digestion","3.75",75,true,"Reaches the 75% diversion target")}
-      ${row("2","Changeover optimization","3.25",65,false,"Fastest payback: 1.1 years")}
-      ${row("3","Food donation","2.50",50,false,"Lowest cost to start")}
-      <figcaption>Weights: environment, finance, operations and risk at 25% each</figcaption>
-    </figure>
+    <div class="nl-chips">
+      <div class="nl-chip"><svg class="nl-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 6h16"/><path d="M4 12h11"/><path d="M4 18h6"/></svg><div><b>A ranked shortlist</b><span>Options weighed on the same criteria</span></div></div>
+      <div class="nl-chip"><svg class="nl-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 14h8"/><path d="M8 17h5"/></svg><div><b>Numbers you can check</b><span>Every score opens to its formula and inputs</span></div></div>
+      <div class="nl-chip"><svg class="nl-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg><div><b>A draft business case</b><span>Editable, ready for your approvers</span></div></div>
     </div>
   </section>
 
-  <section class="lp-sec lp-white reveal" aria-label="What Tera gives you"><p class="lp-label">What you get</p><div class="lp-feats">
-    <div><div class="lp-ill reveal" aria-hidden="true">${ladder("Prevention")}<div class="sbars"><span>Off-spec</span><div class="bar grow" style="width:100%"></div><span class="num">360 t</span><span>Purges</span><div class="bar grow" style="width:67%"></div><span class="num">240 t</span><span>Trim</span><div class="bar grow" style="width:61%"></div><span class="num">220 t</span></div></div><span class="lp-k">01</span><h3>Opportunities matched to your waste</h3><p>Tick the streams your plant has. Tera shows options from prevention to recycling, with nearby partners where public data exists.</p></div>
-    <div><div class="lp-ill reveal" aria-hidden="true">${[["Environment",70],["Finance",45],["Operations",30],["Risk",55]].map(([l,w])=>`<div class="lp-sl"><span>${l}</span><div class="lp-sl-t"><i class="grow" style="width:${w}%"></i><b style="left:${w}%"></b></div></div>`).join("")}</div><span class="lp-k">02</span><h3>A comparison you can check</h3><p>Every score comes from formulas you can open. Change your priorities and the ranking updates; regulation and hard constraints stay visible.</p></div>
-    <div><div class="lp-ill lp-doc reveal" aria-hidden="true"><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i><div class="row" style="gap:6px"><span class="tag t-verified">Observed</span><span class="tag t-estimated">Estimate</span></div></div><span class="lp-k">03</span><h3>A draft business case</h3><p>Seven sections for the option you choose, with sources, assumptions and open questions marked. A starting point for review, not an approval.</p></div>
-  </div></section>
-
-  <section class="lp-sec lp-soft lp-hier reveal" aria-label="The waste hierarchy">
-    <div class="lp-hier-h"><p class="lp-label">How Tera thinks</p><h2>Every option has a place in the <span class="accent">hierarchy</span></h2><p class="lp-lede">Tera looks for prevention first, then reuse, recycling and recovery.</p></div>
-    <div class="lp-hier-g reveal">
-      <div class="lp-hcol">
-        <div class="lp-chip" style="--d:0ms"><span class="lp-n">1</span><div><b>Prevent</b><span>Changeover optimization</span></div><span class="num">144 t</span></div>
-        <div class="lp-chip" style="--d:120ms"><span class="lp-n">2</span><div><b>Reuse</b><span>Supplier take-back</span></div><span class="num">60 t</span></div>
-      </div>
-      <div class="lp-plant"><div class="lp-plant-i"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024.00%2024.00%22%20role%3D%22img%22%20aria-label%3D%22Tera%22%3E%3Ctitle%3ETera%3C/title%3E%3Crect%20x%3D%220.5%22%20y%3D%220.5%22%20width%3D%2223%22%20height%3D%2223%22%20rx%3D%226.5%22%20fill%3D%22%23287A56%22%3E%3C/rect%3E%3Cpath%20d%3D%22M17.9%2011.2A6%206%200%201%201%2013.05%206.1%22%20fill%3D%22none%22%20stroke%3D%22%23FFFFFF%22%20stroke-width%3D%222.7%22%20stroke-linecap%3D%22round%22%3E%3C/path%3E%3Ccircle%20cx%3D%2216.25%22%20cy%3D%227.75%22%20r%3D%221.75%22%20fill%3D%22%23F2C14E%22%3E%3C/circle%3E%3C/svg%3E" alt="" width="40" height="40"></div><b>Example plant</b><span class="num">2,115 t</span><span class="note">of waste a year</span></div>
-      <div class="lp-hcol">
-        <div class="lp-chip" style="--d:240ms"><span class="lp-n">3</span><div><b>Recycle</b><span>Stretch film baling</span></div><span class="num">90 t</span></div>
-        <div class="lp-chip" style="--d:360ms"><span class="lp-n">4</span><div><b>Recover</b><span>Digestion via a depackaging hauler</span></div><span class="num">784 t</span></div>
-      </div>
+  <section id="nl-why" class="nl-sec" aria-labelledby="nl-why-h">
+    <p class="nl-label">Why Tera</p>
+    <h2 id="nl-why-h" class="nl-h2">Zero-waste targets are set. Deciding what to fund is the hard part.</h2>
+    <div class="nl-why">
+      <div><h3>The data is scattered</h3><p>Waste figures, costs and site constraints sit with sustainability, finance and operations, in different files.</p></div>
+      <div><h3>Options are hard to compare</h3><p>A digestion contract and a line change rarely get weighed on the same terms.</p></div>
+      <div><h3>Finance needs a case it can check</h3><p>Approvers ask where each number came from and what is still unknown.</p></div>
     </div>
-    <p class="note lp-hier-n">One example option per step, from the fictional example plant. Options can overlap, so the tonnes don't add up.</p>
   </section>
 
-  <section class="lp-sec lp-white lp-band reveal">
-    <p class="lp-label">Six steps</p><h2>How it works</h2>
-    <ol class="lp-steps">${steps}</ol>
-    <p class="note">Tera asks for numbers only after you pick the options worth a closer look.</p>
+  <section class="nl-preview" aria-label="Example comparison">
+    <div class="nl-card nl-wide">
+      <div class="nl-cardh"><h2>Comparison, example plant</h2><span class="nl-tag">Fictional plant</span></div>
+      ${rows.map(row).join("")}
+      <p class="nl-fine">Weighted preference out of 5. Environment, finance, operations and risk at 25% each. Change the weights and the ranking updates.</p>
+    </div>
+    <div class="nl-card nl-narrow">
+      <div class="nl-cardh"><h2>Evidence quality</h2></div>
+      <ul class="nl-ev">${rows.map(ev).join("")}</ul>
+      <p class="nl-fine">Shown beside the score, never blended into it. Blank inputs stay unknown, never zero.</p>
+    </div>
   </section>
 
-  <section class="lp-sec lp-plain reveal"><p class="lp-label">Before you start</p><div class="lp-two">
-    <div><h2>What to have ready</h2><ul class="lp-list"><li>Waste quantities by stream: a waste log, hauler invoice or rough estimate</li><li>Disposal costs per ton</li><li>Optional: budget range, zero-waste target and the plant's ZIP code</li></ul></div>
-    <div><h2>Honest by design</h2><ul class="lp-list"><li>Blanks stay unknown, never zero</li><li>Numbers come from formulas, not from the AI</li><li>Illustrative and unverified values are labeled</li><li>You choose; Tera never approves spending</li></ul></div>
-  </div></section>
+  <section id="nl-cons" class="nl-card nl-cons" aria-labelledby="nl-cons-h">
+    <h2 id="nl-cons-h" class="nl-h2">Five things weighed, in the open</h2>
+    <p class="nl-sub">Each option is assessed on the same five considerations, and each score shows the formula and inputs behind it, so Finance can check the working.</p>
+    <div class="nl-tiles">${cons.map(([k,t,b])=>`<div class="nl-tile"><span class="nl-tk">${k}</span><h3>${t}</h3><p>${b}</p></div>`).join("")}</div>
+  </section>
 
-  <section class="lp-final lp-deep"><svg class="lp-contour" viewBox="0 0 1200 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><g fill="none" stroke="var(--green-700)" stroke-width="1.4"><path d="M-40 200 C140 130 300 250 500 185 S860 70 1240 150"/><path d="M-40 228 C160 160 320 272 520 212 S880 100 1240 182"/><path d="M-40 172 C120 98 280 222 480 156 S840 40 1240 118"/><path d="M-40 144 C100 66 260 194 460 128 S820 12 1240 88"/><path d="M-40 116 C80 36 240 166 440 100 S800 -18 1240 58"/><path d="M-40 256 C180 190 340 290 540 238 S900 130 1240 214"/><path d="M760 270 C820 214 930 222 990 270"/><path d="M800 270 C845 236 900 240 950 270"/><path d="M180 -10 C230 40 330 34 380 -10"/></g></svg><h2>Ready to look at your plant?</h2><div class="lp-cta"><button class="btn lp-btn-light" data-act="go" data-id="company">Start with my facility</button><button class="btn lp-btn-ghost" data-act="demo">Try with an example plant</button></div></section>
+  <section id="nl-how" class="nl-sec" aria-labelledby="nl-how-h">
+    <p class="nl-label">How it works</p>
+    <h2 id="nl-how-h" class="nl-h2">From a waste profile to a business case in six steps</h2>
+    <ol class="nl-steps">${SCREENS.map((x,k)=>`<li><span class="nl-sn">${k+1}</span><div><h3>${esc(x.name)}</h3><p>${blurb[x.id]||""}</p></div></li>`).join("")}</ol>
+  </section>
 
-  <p class="note lp-foot">Capstone MVP. Covers food and beverage manufacturing only. Catalog costs and sample data are illustrative.</p>
+  <section class="nl-trust" aria-labelledby="nl-trust-h">
+    <svg class="nl-contour2" viewBox="0 0 600 300" aria-hidden="true" focusable="false"><g fill="none" stroke="#1E5E42" stroke-width="1.2"><path d="M20 280C120 120 260 80 580 140"/><path d="M20 250C140 110 280 60 580 110"/><path d="M20 220C160 100 300 40 580 80"/><path d="M20 190C180 90 320 20 580 50"/></g></svg>
+    <div><p class="nl-eyebrow">Human in charge</p><h2 id="nl-trust-h">Tera ranks and explains. It never approves.</h2></div>
+    <ul>
+      <li>${check}<p><b>Numbers from formulas, not the AI.</b> Scores and savings are calculated; the AI only reads documents and drafts text.</p></li>
+      <li>${check}<p><b>Uncertainty in plain sight.</b> Observed values, estimates and assumptions are labelled, never blended.</p></li>
+      <li>${check}<p><b>Your choice, recorded.</b> Pick any option, top-ranked or not, and note why. The business case states it is not an approval.</p></li>
+    </ul>
+  </section>
+
+  <section class="nl-card nl-final" aria-labelledby="nl-final-h">
+    <div><h2 id="nl-final-h" class="nl-h2">See it on a sample plant</h2><p class="nl-sub">Larkfield Provisions is a fictional food manufacturer. Walk the full journey in a few minutes, no setup needed.</p>
+      <div class="nl-cta"><button class="btn primary nl-pill" data-act="demo">Try the demo</button><button class="btn nl-pill" data-act="go" data-id="company">Start with my facility</button></div></div>
+    <div><h3>For your own plant, have ready</h3><ul class="nl-ready"><li>Waste quantities by stream: a waste log, hauler invoice or rough estimate</li><li>Disposal costs per ton</li><li>Optional: budget range, zero-waste target and the plant's ZIP code</li></ul></div>
+  </section>
+
+  <footer class="nl-foot"><b>Tera · Capstone project, M.S. Technology Management, Columbia University · 2026</b><span>Tera is a student project and is not endorsed by Columbia University. It covers food and beverage manufacturing only. Catalog costs and sample data are illustrative and should not be used for real investment decisions.</span></footer>
   </div>`;
 }
+
 function revealOnScroll(){
   const els=document.querySelectorAll("#main .reveal:not(.in)"); if(!els.length) return;
   if(!("IntersectionObserver" in window)){ els.forEach(e=>e.classList.add("in")); return; }
